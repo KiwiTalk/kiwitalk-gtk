@@ -1,5 +1,5 @@
 use gtk::prelude::{BuilderExtManual, WidgetExtManual};
-use gtk::{WidgetExt, Inhibit, EntryExt, DialogFlags, MessageType, ButtonsType, DialogExt, Dialog, GtkWindowExt};
+use gtk::{WidgetExt, Inhibit, EntryExt, DialogFlags, MessageType, ButtonsType, DialogExt, Dialog, GtkWindowExt, EditableSignals};
 use loco::internal::{LoginData, TokenClient, StatusCode, DeviceRegisterData, LoginAccessData};
 use uuid::Uuid;
 use std::fs::File;
@@ -26,7 +26,6 @@ pub fn init() {
 	let register_device_cancel_button: gtk::Button = builder.get_object("register_device_cancel_button").unwrap();
 
 	register_device_dialog.connect_delete_event(| dialog, _ | dialog.hide_on_delete());
-
 	let id_not_found_message_dialog: gtk::MessageDialog = builder.get_object("id_not_found_message_dialog").unwrap();
 	id_not_found_message_dialog.connect_delete_event(| dialog, _ | dialog.hide_on_delete());
 
@@ -89,7 +88,7 @@ pub fn init() {
 					file.write(serde_yaml::to_string(&login_access_data).unwrap().as_bytes());
 				},
 				StatusCode::DeviceNotRegistered => {
-					//token_client.request_passcode(&login_data);
+					token_client.request_passcode(&login_data);
 
 					let token_client_c = token_client.clone();
 					let login_data_c = login_data.clone();
