@@ -24,16 +24,20 @@
               <object class="GtkImage" id="icon_image">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="halign">center</property>
+                <property name="valign">center</property>
                 <property name="margin_start">1</property>
                 <property name="margin_end">1</property>
                 <property name="margin_top">1</property>
                 <property name="margin_bottom">1</property>
-                <property name="icon_name">chat-message-new-symbolic</property>
+                <property name="xalign">0.10000000149011612</property>
+                <property name="yalign">0.10000000149011612</property>
+                <property name="pixbuf">\src\gui\assets\images\kiwi.svg</property>
                 <property name="icon_size">6</property>
               </object>
               <packing>
                 <property name="expand">False</property>
-                <property name="fill">True</property>
+                <property name="fill">False</property>
                 <property name="position">0</property>
               </packing>
             </child>
@@ -130,7 +134,7 @@
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="apply_button">
                 <property name="label">gtk-apply</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -149,7 +153,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="cancel_button">
                 <property name="label">gtk-cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -424,41 +428,6 @@
       <placeholder/>
     </child>
   </object>
-  <object class="GtkMessageDialog" id="wrong_password_message_dialog">
-    <property name="can_focus">False</property>
-    <property name="modal">True</property>
-    <property name="icon_name">dialog-error-symbolic</property>
-    <property name="type_hint">dialog</property>
-    <property name="attached_to">window</property>
-    <property name="message_type">error</property>
-    <property name="text" translatable="yes">Wrong password</property>
-    <property name="secondary_text" translatable="yes">check your password and try again</property>
-    <child internal-child="vbox">
-      <object class="GtkBox">
-        <property name="can_focus">False</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox">
-            <property name="can_focus">False</property>
-            <property name="margin_start">1</property>
-            <property name="margin_end">1</property>
-            <property name="margin_top">1</property>
-            <property name="margin_bottom">1</property>
-            <property name="layout_style">end</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-      </object>
-    </child>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
-  </object>
   <object class="GtkMessageDialog" id="wrong_confirm_code_message_dialog">
     <property name="can_focus">False</property>
     <property name="modal">True</property>
@@ -488,6 +457,41 @@
             <child>
               <placeholder/>
             </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
+  </object>
+  <object class="GtkMessageDialog" id="wrong_password_message_dialog">
+    <property name="can_focus">False</property>
+    <property name="modal">True</property>
+    <property name="icon_name">dialog-error-symbolic</property>
+    <property name="type_hint">dialog</property>
+    <property name="attached_to">window</property>
+    <property name="message_type">error</property>
+    <property name="text" translatable="yes">Wrong password</property>
+    <property name="secondary_text" translatable="yes">check your password and try again</property>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="can_focus">False</property>
+            <property name="margin_start">1</property>
+            <property name="margin_end">1</property>
+            <property name="margin_top">1</property>
+            <property name="margin_bottom">1</property>
+            <property name="layout_style">end</property>
           </object>
           <packing>
             <property name="expand">False</property>

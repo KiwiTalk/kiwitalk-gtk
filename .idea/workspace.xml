@@ -2,11 +2,29 @@
 <project version="4">
   <component name="CargoProjects">
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
+    <cargoProject FILE="$PROJECT_DIR$/loco.rs/loco-derive/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d8faf96-680b-4864-aced-e9df3db5891f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/build.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loco.rs/src/internal/loco_pem_pub_key" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loco.rs/src/internal/loco_pub_key" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kiwitalk-gtk.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kiwitalk-gtk.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loco.rs" beforeDir="false" afterPath="$PROJECT_DIR$/loco.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loco.rs/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/loco.rs/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loco.rs/src/dispatch/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loco.rs/src/internal/key.rs" beforeDir="false" afterPath="$PROJECT_DIR$/loco.rs/src/internal/key.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loco.rs/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/loco.rs/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loco.rs/src/net/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loco.rs/src/packet/get_conf.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loco.rs/src/packet/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loco.rs/src/packet/protocol_info.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/login.glade" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/login.glade" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/login.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/login.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,14 +58,35 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\djdis\kiwitalk-gtk" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\djdis\kiwitalk-gtk\loco.rs\src" />
+    </key>
+  </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
-      <command value="cargo update" />
       <command value="cargo run" />
+      <command value="cargo update" />
+      <command value="cargo build loco" />
       <command value="cargo build" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run">
+  <component name="RunManager" selected="Cargo.build">
+    <configuration name="build [kiwitalk-gtk]" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="channel" value="DEFAULT" />
+      <option name="command" value="build" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="build" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="channel" value="DEFAULT" />
       <option name="command" value="build" />
@@ -86,9 +125,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.run" />
         <item itemvalue="Cargo.build" />
+        <item itemvalue="Cargo.build [kiwitalk-gtk]" />
+        <item itemvalue="Cargo.build [kiwitalk-gtk]" />
         <item itemvalue="Cargo.update" />
+        <item itemvalue="Cargo.run" />
       </list>
     </recent_temporary>
   </component>
@@ -107,6 +148,12 @@
       <workItem from="1606899392858" duration="13831000" />
       <workItem from="1606972813667" duration="5732000" />
       <workItem from="1606989570561" duration="18870000" />
+      <workItem from="1607052018390" duration="77000" />
+      <workItem from="1607055349405" duration="3001000" />
+      <workItem from="1607059776827" duration="8229000" />
+      <workItem from="1607102591864" duration="169000" />
+      <workItem from="1607168786875" duration="2579000" />
+      <workItem from="1607171980888" duration="1001000" />
     </task>
     <servers />
   </component>
@@ -114,29 +161,41 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1323" height="179" key="GridCell.Tab.0.bottom" timestamp="1607021500862">
+    <state x="411" y="164" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1607079475667">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1607021500862" />
-    <state width="1323" height="179" key="GridCell.Tab.0.center" timestamp="1607021500862">
+    <state x="411" y="164" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728@0.0.1366.728" timestamp="1607079475667" />
+    <state x="488" y="80" key="#com.intellij.ide.util.MemberChooser" timestamp="1607169914512">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1607021500862" />
-    <state width="1323" height="179" key="GridCell.Tab.0.left" timestamp="1607021500862">
+    <state x="488" y="80" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1607169914512" />
+    <state width="1323" height="179" key="GridCell.Tab.0.bottom" timestamp="1607171416542">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1607021500862" />
-    <state width="1323" height="179" key="GridCell.Tab.0.right" timestamp="1607021500862">
+    <state width="1323" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1607171416542" />
+    <state width="1323" height="179" key="GridCell.Tab.0.center" timestamp="1607171416542">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1607021500862" />
-    <state x="498" y="277" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606920060174">
+    <state width="1323" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1607171416542" />
+    <state width="1323" height="179" key="GridCell.Tab.0.left" timestamp="1607171416541">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="498" y="277" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1606920060174" />
-    <state x="339" y="162" width="672" height="677" key="run.anything.popup" timestamp="1606915806800">
+    <state width="1323" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1607171416541" />
+    <state width="1323" height="179" key="GridCell.Tab.0.right" timestamp="1607171416542">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="339" y="162" width="672" height="677" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1606915806800" />
+    <state width="1323" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1607171416542" />
+    <state x="498" y="277" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1607170153005">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="498" y="277" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1607170153005" />
+    <state x="339" y="162" width="672" height="677" key="run.anything.popup" timestamp="1607170820667">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="339" y="162" width="672" height="677" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1607170820667" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1607169069279">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1607169069279" />
   </component>
 </project>

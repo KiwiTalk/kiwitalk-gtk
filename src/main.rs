@@ -4,21 +4,18 @@ extern crate lazy_static;
 use dirs::home_dir;
 use std::path::PathBuf;
 use std::sync::RwLock;
-use config::Config;
+use ezconfig::Config;
 use std::fs;
 
 mod login;
 
 lazy_static! {
 	pub static ref CONFIG: RwLock<Config> = {
-	    let config = RwLock::new(Config::default());
 	    let mut dir = app_home_dir();
 	    dir.push("config.yml");
-	    if !dir.exists() {
-	        fs::write(&dir, "[]").unwrap();
-	    }
-	    config.write().unwrap().merge(config::File::with_name(dir.to_str().unwrap()));
-	    config
+	    let mut config = Config::new(dir);
+	    config.load();
+	    RwLock::new(config)
 	};
 }
 
@@ -32,7 +29,7 @@ fn app_home_dir() -> PathBuf {
 }
 
 fn main() {
-    gtk::init();
+    gtk::init().unwrap();
     login::init();
     gtk::main();
 }

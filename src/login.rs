@@ -1,19 +1,18 @@
 use gtk::prelude::{BuilderExtManual, WidgetExtManual};
-use gtk::{WidgetExt, Inhibit, EntryExt, DialogFlags, MessageType, ButtonsType, DialogExt, Dialog, GtkWindowExt, EditableSignals};
+use gtk::{WidgetExt, Inhibit, EntryExt, GtkWindowExt};
 use loco::internal::{LoginData, TokenClient, StatusCode, DeviceRegisterData, LoginAccessData};
 use uuid::Uuid;
 use std::fs::File;
 use crate::{app_home_dir, CONFIG};
-use config::Config;
 use loco::internal::agent::Os;
 use std::io::Write;
-use std::env::Args;
 use std::rc::Rc;
+use serde_yaml::Value;
 
 pub fn init() {
 	let builder = gtk::Builder::from_string(include_str!("gui/login.glade"));
 	let window: gtk::Window = builder.get_object("window").unwrap();
-	let icon_image: gtk::Image = builder.get_object("icon_image").unwrap();
+	//let icon_image: gtk::Image = builder.get_object("icon_image").unwrap();
 	let email_entry: gtk::Entry = builder.get_object("email_entry").unwrap();
 	let password_entry: gtk::Entry = builder.get_object("password_entry").unwrap();
 	let keep_login_check_button: gtk::CheckButton = builder.get_object("keep_login_check_button").unwrap();
@@ -23,7 +22,7 @@ pub fn init() {
 	let register_device_code_entry: gtk::Entry = builder.get_object("register_device_code_entry").unwrap();
 	let register_device_code_send_button: gtk::Button = builder.get_object("register_device_code_send_button").unwrap();
 	let register_device_apply_button: gtk::Button = builder.get_object("register_device_apply_button").unwrap();
-	let register_device_cancel_button: gtk::Button = builder.get_object("register_device_cancel_button").unwrap();
+	//let register_device_cancel_button: gtk::Button = builder.get_object("register_device_cancel_button").unwrap();
 
 	register_device_dialog.connect_delete_event(| dialog, _ | dialog.hide_on_delete());
 	let id_not_found_message_dialog: gtk::MessageDialog = builder.get_object("id_not_found_message_dialog").unwrap();
@@ -48,8 +47,9 @@ pub fn init() {
 	wrong_confirm_code_message_dialog.connect_delete_event(| dialog, _ | dialog.hide_on_delete());
 
 
-	CONFIG.write().unwrap().set_default("uuid", Uuid::new_v4().to_string()).unwrap();
-	let uuid = CONFIG.read().unwrap().get_str("uuid").unwrap();
+	CONFIG.write().unwrap().set_default("uuid", Value::String(Uuid::new_v4().to_string()));
+	CONFIG.write().unwrap().save();
+	let uuid = CONFIG.read().unwrap().get("uuid").unwrap().as_str().unwrap().to_owned();
 
 	println!("{}", &uuid);
 
@@ -59,8 +59,7 @@ pub fn init() {
 		}
 	});
 
-	let mut login = {
-		let window_c = window.clone();
+	let login = {
 		let email_entry_c = email_entry.clone();
 		let password_entry_c = password_entry.clone();
 		let keep_login_check_button_c = keep_login_check_button.clone();
@@ -85,20 +84,20 @@ pub fn init() {
 					let mut output_dir = app_home_dir();
 					output_dir.push("login_access_data.yml");
 					let mut file = File::create(output_dir).unwrap();
-					file.write(serde_yaml::to_string(&login_access_data).unwrap().as_bytes());
+					file.write(serde_yaml::to_string(&login_access_data).unwrap().as_bytes()).unwrap();
 				},
 				StatusCode::DeviceNotRegistered => {
-					token_client.request_passcode(&login_data);
+					token_client.request_passcode(&login_data).unwrap();
 
 					let token_client_c = token_client.clone();
 					let login_data_c = login_data.clone();
 					register_device_code_send_button.connect_button_release_event(move | _, _ | {
-						token_client_c.request_passcode(&login_data_c);
+						token_client_c.request_passcode(&login_data_c).unwrap();
 						Inhibit(false)
 					});
 
-					let mut token_client_c = token_client.clone();
-					let mut login_error_handle_c = login_error_handle.clone();
+					let token_client_c = token_client.clone();
+					let login_error_handle_c = login_error_handle.clone();
 					let register_device_code_entry_c = register_device_code_entry.clone();
 					let device_register_success_message_dialog_c = device_register_success_message_dialog.clone();
 					let wrong_confirm_code_message_dialog_c = wrong_confirm_code_message_dialog.clone();
@@ -133,16 +132,11 @@ pub fn init() {
 		})
 	};
 
-	icon_image.connect_draw(| image, context | {
-		//TODO
-		Inhibit(false)
-	});
-
 	let login_c = login.clone();
-	email_entry.connect_activate(move | entry | login_c());
+	email_entry.connect_activate(move | _ | login_c());
 	let login_c = login.clone();
-	password_entry.connect_activate(move | entry | login_c());
-	apply_button.connect_button_release_event(move |button, event_button | {
+	password_entry.connect_activate(move | _ | login_c());
+	apply_button.connect_button_release_event(move | _, _ | {
 		login();
 		Inhibit(false)
 	});
