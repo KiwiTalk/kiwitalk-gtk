@@ -1,0 +1,84 @@
+pub struct Login
+{
+    id_not_found_message_dialog : gtk :: MessageDialog,
+    register_device_code_send_button : gtk :: Button,
+    device_register_success_message_dialog : gtk :: MessageDialog,
+    cancel_button : gtk :: Button, keep_login_check_button : gtk ::
+    CheckButton, register_device_code_entry : gtk :: Entry,
+    wrong_password_message_dialog : gtk :: MessageDialog, password_entry : gtk
+    :: Entry, register_device_cancel_button : gtk :: Button,
+    register_device_dialog : gtk :: Dialog, apply_button : gtk :: Button,
+    window : gtk :: Window, force_check_button : gtk :: CheckButton,
+    too_many_confirm_request_message_dialog : gtk :: MessageDialog,
+    wrong_confirm_code_message_dialog : gtk :: MessageDialog, icon_image : gtk
+    :: Image, email_entry : gtk :: Entry, register_device_apply_button : gtk
+    :: Button,
+} impl Login
+{
+    thread_local !
+    { static OBJECTS : Option < std :: rc :: Rc < Login >> = None ; } pub fn
+    get() -> std :: rc :: Rc < Self >
+    {
+        Self :: OBJECTS .
+        with(| objects |
+             {
+                 if objects . is_none()
+                 {
+                     let objects_mut = unsafe
+                     {
+                         std :: mem :: transmute :: < & Option < std :: rc ::
+                         Rc < Self >>, & mut Option < std :: rc :: Rc < Self
+                         >> > (objects)
+                     } ; objects_mut .
+                     replace(std :: rc :: Rc :: new(Self :: new())) ;
+                 } objects . as_ref() . unwrap() . clone()
+             })
+    } fn new() -> Self
+    {
+        let builder = gtk :: Builder ::
+        from_string(include_str ! ("gui/login.glade")) ; Self
+        {
+            id_not_found_message_dialog : gtk :: prelude :: BuilderExtManual
+            :: get_object(& builder, "id_not_found_message_dialog") .
+            unwrap(), register_device_code_send_button : gtk :: prelude ::
+            BuilderExtManual ::
+            get_object(& builder, "register_device_code_send_button") .
+            unwrap(), device_register_success_message_dialog : gtk :: prelude
+            :: BuilderExtManual ::
+            get_object(& builder, "device_register_success_message_dialog") .
+            unwrap(), cancel_button : gtk :: prelude :: BuilderExtManual ::
+            get_object(& builder, "cancel_button") . unwrap(),
+            keep_login_check_button : gtk :: prelude :: BuilderExtManual ::
+            get_object(& builder, "keep_login_check_button") . unwrap(),
+            register_device_code_entry : gtk :: prelude :: BuilderExtManual ::
+            get_object(& builder, "register_device_code_entry") . unwrap(),
+            wrong_password_message_dialog : gtk :: prelude :: BuilderExtManual
+            :: get_object(& builder, "wrong_password_message_dialog") .
+            unwrap(), password_entry : gtk :: prelude :: BuilderExtManual ::
+            get_object(& builder, "password_entry") . unwrap(),
+            register_device_cancel_button : gtk :: prelude :: BuilderExtManual
+            :: get_object(& builder, "register_device_cancel_button") .
+            unwrap(), register_device_dialog : gtk :: prelude ::
+            BuilderExtManual ::
+            get_object(& builder, "register_device_dialog") . unwrap(),
+            apply_button : gtk :: prelude :: BuilderExtManual ::
+            get_object(& builder, "apply_button") . unwrap(), window : gtk ::
+            prelude :: BuilderExtManual :: get_object(& builder, "window") .
+            unwrap(), force_check_button : gtk :: prelude :: BuilderExtManual
+            :: get_object(& builder, "force_check_button") . unwrap(),
+            too_many_confirm_request_message_dialog : gtk :: prelude ::
+            BuilderExtManual ::
+            get_object(& builder, "too_many_confirm_request_message_dialog") .
+            unwrap(), wrong_confirm_code_message_dialog : gtk :: prelude ::
+            BuilderExtManual ::
+            get_object(& builder, "wrong_confirm_code_message_dialog") .
+            unwrap(), icon_image : gtk :: prelude :: BuilderExtManual ::
+            get_object(& builder, "icon_image") . unwrap(), email_entry : gtk
+            :: prelude :: BuilderExtManual ::
+            get_object(& builder, "email_entry") . unwrap(),
+            register_device_apply_button : gtk :: prelude :: BuilderExtManual
+            :: get_object(& builder, "register_device_apply_button") .
+            unwrap(),
+        }
+    }
+}

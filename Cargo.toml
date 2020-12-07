@@ -25,4 +25,4 @@ version = ""
 features = ["v2_44"]
 
 [build-dependencies]
-fs_extra = "1.2.0"
+glade-bindgen = "0.2"

@@ -8,6 +8,7 @@ use ezconfig::Config;
 use std::fs;
 
 mod login;
+pub mod gui;
 
 lazy_static! {
 	pub static ref CONFIG: RwLock<Config> = {
