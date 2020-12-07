@@ -6,22 +6,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d8faf96-680b-4864-aced-e9df3db5891f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitmodules" beforeDir="false" afterPath="$PROJECT_DIR$/.gitmodules" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.rs" beforeDir="false" afterPath="$PROJECT_DIR$/build.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loco.rs" beforeDir="false" afterPath="$PROJECT_DIR$/loco.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loco.rs/src/internal/account.rs" beforeDir="false" afterPath="$PROJECT_DIR$/loco.rs/src/internal/account.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loco.rs/src/internal/agent.rs" beforeDir="false" afterPath="$PROJECT_DIR$/loco.rs/src/types/os.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loco.rs/src/internal/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/loco.rs/src/internal/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loco.rs/src/internal/token_client.rs" beforeDir="false" afterPath="$PROJECT_DIR$/loco.rs/src/internal/token_client.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loco.rs/src/protocol/booking/get_conf.rs" beforeDir="false" afterPath="$PROJECT_DIR$/loco.rs/src/protocol/booking/get_conf.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loco.rs/src/types/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/loco.rs/src/types/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/#login.glade#" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/login.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/login.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/debug.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/debug.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,7 +155,7 @@
       <workItem from="1607171980888" duration="5016000" />
       <workItem from="1607198456624" duration="15183000" />
       <workItem from="1607253595716" duration="14787000" />
-      <workItem from="1607316179852" duration="908000" />
+      <workItem from="1607316179852" duration="1450000" />
     </task>
     <servers />
   </component>
