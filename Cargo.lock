@@ -573,9 +573,9 @@ dependencies = [
 
 [[package]]
 name = "glade-bindgen"
-version = "0.2.0"
+version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3635e6cabcc09cbb16225fb556406c911fc0c29190f8f8af7f4ddd338227e038"
+checksum = "aad32008c4391e59e8bb81003d0c2da2ab979c1944e96330e8f224483bc5758b"
 dependencies = [
  "convert_case",
  "quote",
