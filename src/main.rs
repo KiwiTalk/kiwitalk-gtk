@@ -6,6 +6,8 @@ use std::path::PathBuf;
 use std::sync::RwLock;
 use ezconfig::Config;
 use std::fs;
+use gio::{ApplicationFlags, ApplicationExt};
+use gio::prelude::ApplicationExtManual;
 
 mod login;
 pub mod gui;
@@ -15,6 +17,7 @@ lazy_static! {
 	    let mut dir = app_home_dir();
 	    dir.push("config.yml");
 	    let mut config = Config::new(dir);
+	    config.init();
 	    config.load();
 	    RwLock::new(config)
 	};
@@ -31,6 +34,9 @@ fn app_home_dir() -> PathBuf {
 
 fn main() {
     gtk::init().unwrap();
-    login::init();
-    gtk::main();
+    let application = gtk::Application::new(None, ApplicationFlags::default()).unwrap();
+    application.connect_activate(move | application | {
+        login::init(application);
+    });
+    application.run(&[]);
 }

@@ -1,5 +1,5 @@
 use gtk::prelude::WidgetExtManual;
-use gtk::{WidgetExt, Inhibit, EntryExt, GtkWindowExt};
+use gtk::{WidgetExt, Inhibit, EntryExt, GtkWindowExt, GtkApplicationExt};
 use loco::internal::{LoginData, TokenClient, StatusCode, DeviceRegisterData, LoginAccessData};
 use uuid::Uuid;
 use std::fs::File;
@@ -10,9 +10,8 @@ use std::rc::Rc;
 use serde_yaml::Value;
 use crate::gui::Login;
 
-pub fn init() {
-
-	Login::get().window.connect_delete_event(| window, _ | window.hide_on_delete());
+pub fn init(application: &gtk::Application) {
+	application.add_window(&Login::get().window);
 
 	Login::get().cancel_button.connect_button_release_event(move | _, _ | {
 		Login::get().window.close();
