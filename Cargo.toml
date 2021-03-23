@@ -25,4 +25,4 @@ version = ""
 features = ["v2_44"]
 
 [build-dependencies]
-glade-bindgen = "0.2"
+glade-bindgen = "1.0"
