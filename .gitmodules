@@ -1,6 +1,0 @@
-[submodule "loco.rs"]
-	path = loco.rs
-	url = https://github.com/KiwiTalk/loco.rs
-[submodule "glade-bindgen"]
-	path = glade-bindgen
-	url = https://github.com/djdisodo/glade-bindgen
