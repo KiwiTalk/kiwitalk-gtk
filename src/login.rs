@@ -1,6 +1,7 @@
 use std::lazy::Lazy;
 use std::time::Duration;
 use email_address::EmailAddress;
+use gtk::Application;
 use gtk::gdk::Event;
 use gtk::prelude::*;
 use log::{debug, error, info};
@@ -10,14 +11,14 @@ use talk_api_client::auth::{AccountLoginForm, AuthClientConfig, LoginMethod, Sta
 use talk_api_client::auth::resources::LoginData;
 use talk_api_client::auth::xvc::default::Win32XVCHasher;
 use talk_api_client::response::TalkStatusResponse;
-use crate::gui::Login;
+use crate::gui::{Login, Main};
 use crate::{auth_device_config, LOGIN_DATA_PATH, try_login};
 
 fn auth_client_config() -> AuthClientConfig<'static> {
 	AuthClientConfig::new_const(
 		auth_device_config(),
 		"ko",
-		"3.2.8",
+		"3.3.7",
 		TalkApiAgent::Win32("10.0".into())
 	)
 }
@@ -26,15 +27,16 @@ const AUTH_CLIENT: Lazy<TalkAuthClient<Win32XVCHasher>> = Lazy::new(|| {
 	TalkAuthClient::new(auth_client_config(), XVC_HASHER)
 });
 
-const XVC_HASHER: Win32XVCHasher = Win32XVCHasher::new_const("JAYDEN", "JAYMOND");
+const XVC_HASHER: Win32XVCHasher = Win32XVCHasher::new_const("BLUE", "CELINA");
 
-pub fn init() {
+pub fn init(app: &Application) {
 
 	let gui = Login::get();
 	fn hide_on_delete(w: &impl WidgetExtManual, _: &Event) -> Inhibit {
 		w.hide_on_delete()
 	}
 
+	gui.window.set_application(Some(app));
 
 	gui.wrong_password_message_dialog.set_parent(&gui.window);
 
@@ -71,8 +73,6 @@ pub fn init() {
 	gui.cancel_button.connect_clicked(|_| {
 		Login::get().window.close()
 	});
-
-	gui.window.show_all();
 }
 
 fn login_form() -> AccountLoginForm<'static> {
@@ -119,12 +119,11 @@ async fn handle_response(response: TalkStatusResponse<LoginData>) {
 					LOGIN_DATA_PATH.as_path(),
 					serde_yaml::to_string(&data).unwrap()
 				).map_err(|e| error!("error while saving login data: {}", e)).ok();
-				//todo start kiwitalk
-				//gtk::glib::idle_add_once(|| Login::get().window.close());
-				let result = try_login().await;
-				if let Err(e) = result {
-					println!("err: {:#?}", e);
-				}
+				try_login().await.unwrap();
+				gtk::glib::idle_add_once(|| {
+					Login::get().window.close();
+					Main::get().main_application_window.show_all();
+				});
 			}
 		},
 		Status::DeviceNotRegistered => {

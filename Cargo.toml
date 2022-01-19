@@ -20,7 +20,9 @@ tokio = { version = "1.15.0", features = ["rt", "macros", "rt-multi-thread"] }
 simple_logger = "1.16"
 email_address = "0.2"
 kiwitalk = { path = "../kiwitalk-rs" }
+talk-loco-client = { path = "../talk-loco-client-rs" }
 thiserror = "1.0.30"
+rand = "0.8"
 
 [dependencies.gtk]
 version = "0.14.3"
@@ -31,4 +33,4 @@ version = "0.14.8"
 #features = ["v2_66"]
 
 [build-dependencies]
-glade-bindgen = "1.2"
+glade-bindgen = { git = "https://github.com/djdisodo/glade-bindgen.git" }
