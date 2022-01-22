@@ -23,6 +23,7 @@ kiwitalk = { path = "../kiwitalk-rs" }
 talk-loco-client = { path = "../talk-loco-client-rs" }
 thiserror = "1.0.30"
 rand = "0.8"
+futures = "0.3.19"
 
 [dependencies.gtk]
 version = "0.14.3"

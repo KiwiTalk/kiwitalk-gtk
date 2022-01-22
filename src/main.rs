@@ -4,6 +4,7 @@ use std::path::PathBuf;
 use std::lazy::{Lazy, SyncLazy};
 use std::ops::Deref;
 use std::sync::Arc;
+use std::time::Duration;
 use directories::ProjectDirs;
 use gio::ApplicationFlags;
 use gio::prelude::{ApplicationExt, ApplicationExtManual};
@@ -19,13 +20,17 @@ use uuid::Uuid;
 use kiwitalk::{Kiwitalk, KiwitalkEvent, KiwitalkHandle};
 use talk_api_client::auth::AuthDeviceConfig;
 use talk_api_client::auth::resources::LoginData;
+use talk_loco_client::structs::channel_info::{ChannelInfo, ChannelListData};
 use talk_loco_client::structs::openlink::OpenProfileType::Main;
-use crate::component::ChannelEntry;
+use talk_loco_client::structs::user::UserVariant;
+use crate::component::{Channel, ChannelEntry};
+use crate::event_handler::{chat_list_update_handler, message_handler};
 use crate::gui::Login;
 
 mod login;
 mod talk;
 mod component;
+mod event_handler;
 pub mod gui;
 
 const PROJECT_DIRS: Lazy<ProjectDirs> = Lazy::new(|| {
@@ -99,17 +104,25 @@ async fn main() {
 
 
 pub fn init(app: &Application) {
-    gui::Main::get().main_application_window.set_application(Some(app));
+    let gui = gui::Main::get();
+    gui.main_application_window.set_application(Some(app));
 
 
-    gui::Main::get().chats_list_box.set_sort_func(Some(Box::new(|a, b| {
+    gui.chats_list_box.set_sort_func(Some(Box::new(|a, b| {
         let a: ChannelEntry = a.child().unwrap().downcast().unwrap();
         let b: ChannelEntry = b.child().unwrap().downcast().unwrap();
         a.last_update().duration_since(b.last_update()).as_secs() as _
     })));
+    gui.chats_list_box.connect_row_selected(|list_box, row| if let Some(row) = row {
+        let channel_entry: ChannelEntry = row.child().unwrap().downcast().unwrap();
+        channel_entry.on_selected();
+    });
 }
 
 static KIWITALK: SyncLazy<RwLock<Option<KiwitalkHandle>>> = SyncLazy::new(Default::default);
+pub async fn kiwitalk() -> Arc<Kiwitalk> {
+    KIWITALK.read().await.as_ref().unwrap().inner.clone()
+}
 
 static EVENT_HANDLER: SyncLazy<Mutex<Option<JoinHandle<()>>>> = SyncLazy::new(Default::default);
 
@@ -144,26 +157,28 @@ async fn try_login() -> Result<(), Error> {
 async fn event_handler(mut event_channel: UnboundedReceiver<KiwitalkEvent>, kiwitalk: &Arc<Kiwitalk>) -> Result<(), Error>{
     while kiwitalk.is_running().await {
         let event = event_channel.recv().await.unwrap();
-        debug!("recv event: {:#?}", event);
-        match event {
-            KiwitalkEvent::ChatListUpdate(chat_list) => {
-                let entries = gui::Main::get().chats_list_box.children();
-                for x in entries {
-                    gui::Main::get().chats_list_box.remove(&x);
-                }
-                'a: for channel_list in chat_list.chat_datas {
-                    let entry = ChannelEntry::new(channel_list);
-                    gui::Main::get().chats_list_box.add(&entry);
-                }
-                gui::Main::get().chats_list_box.invalidate_sort();
+        tokio::spawn(async move {
+            if let Err(e) = match event {
+                KiwitalkEvent::ChatListUpdate(chat_list) => chat_list_update_handler(chat_list).await,
+                KiwitalkEvent::Message(msg) => message_handler(msg).await
+            } {
+                error!("{e}")
             }
-        }
+        });
     }
     Ok(())
 }
 
+pub fn add_channel_list(channel_list: &ChannelListData, members: Vec<UserVariant>, channel_info: ChannelInfo) -> ChannelEntry {
+    let channel = Channel::new(channel_list.id, members, channel_info);
+    let entry = ChannelEntry::new(&channel_list, channel);
+    gui::Main::get().chats_list_box.add(&entry);
+    entry.show();
+    entry
+}
+
 #[derive(Debug, thiserror::Error)]
-enum Error {
+pub enum Error {
     #[error("{0}")]
     Kiwitalk(#[from] kiwitalk::Error),
     #[error("{0}")]
